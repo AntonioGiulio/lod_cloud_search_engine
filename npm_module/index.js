@@ -65,6 +65,68 @@ class LC_Querier {
 
         return results;
     }
+
+    sortResultsBySize(results){
+        console.log('ordinamento per size');
+        results.sort(function(a, b){ return b.triples - a.triples});
+
+        return results;
+    }
+
+    sortResultsByName(results){
+        console.log('Ordinamento in ordine alfabetico');
+        results.sort(function(a, b){
+            var x = a.identifier.toLowerCase();
+            var y = b.identifier.toLowerCase();
+            if (x < y) {return -1;}
+            if (x > y) {return 1;}
+            return 0;
+        });
+
+        return results;
+    }
+
+    sortResultsByAuthority(results){
+        console.log('Ordinamento per authority in base al pagerank');
+        var resultGraph = createGraph(results);
+        var rank = pagerank(resultGraph);
+        console.log(rank);
+
+        results.sort(function(a, b) { return rank[b.identifier] - rank[a.identifier]});
+
+        return results;
+    }
+
+    sortResultsByCentrality(results){
+        console.log('Ordinamento per centrality');
+        var resultGraph = createGraph(results);
+        var rank = centrality.degree(resultGraph);
+        console.log(rank);
+
+        results.sort(function(a, b) { return rank[b.identifier] - rank[a.identifier]});
+
+        return results;
+    }
+}
+
+function createGraph(raw){
+    //creiamo un grafo vuoto
+    var graph = graphBuilder();
+    //riempiamolo con i nodi che rappresentano gli identifier dei datasets risultanti dalla ricerca su lodcloud
+    for(d in raw){
+        graph.addNode(raw[d].identifier);
+    }
+    //cerchiamo i link diretti tra i nodi creati
+    for(d in raw){
+        var currKGLinks = raw[d].links;
+        for(link in currKGLinks){
+            if(graph.getNode(currKGLinks[link].target) != null){
+                graph.addLink(raw[d].identifier, currKGLinks[link].target);
+            }
+        }
+    }
+
+    return graph;
 }
 
 module.exports = LC_Querier;
