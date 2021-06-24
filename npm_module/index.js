@@ -31,7 +31,8 @@ class LC_Querier {
             if(pattern.test(field))
                 results[i++] = this.datasets[d];            
         }
-        return results;
+        
+        return this.generalSorting(results, arguments[1]);
     }
 
     tagSearch(target, tag){
@@ -45,7 +46,7 @@ class LC_Querier {
                 results[i++] = this.datasets[d];
         }
 
-        return results;    
+        return this.generalSorting(results, arguments[2]);
     }
 
     multiTagSearch(target, ...tags){
@@ -63,7 +64,30 @@ class LC_Querier {
             }
         }
 
-        return results;
+        return this.generalSorting(results, arguments[arguments.length-1]);
+    }
+
+    generalSorting(result, mode){
+        switch(mode){
+            case 'size':
+                return this.sortResultsBySize(result);
+                break;
+            
+            case 'name':
+                return this.sortResultsByName(result);
+                break;
+
+            case 'authority':
+                return this.sortResultsByAuthority(result);
+                break;
+
+            case 'centrality':
+                return this.sortResultsByCentrality(result);
+                break;
+
+            default:
+                return this.sortResultsByName(result);
+        }
     }
 
     sortResultsBySize(results){
