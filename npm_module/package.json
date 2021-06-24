@@ -1,0 +1,8 @@
+{
+    "main": "index.js",
+    "name": "lodcloud-querier",
+    "version": "0.1.0",
+    "dependencies": {
+        "xmlhttprequest": "^1.8.0"
+    }
+}
