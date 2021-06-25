@@ -3,6 +3,9 @@
     "name": "lodcloud-querier",
     "version": "0.1.0",
     "dependencies": {
-        "xmlhttprequest": "^1.8.0"
+        "xmlhttprequest": "^1.8.0",
+        "ngraph.centrality": "^2.0.1",
+        "ngraph.graph": "^19.1.0",
+        "ngraph.pagerank": "^2.0.0"
     }
 }
