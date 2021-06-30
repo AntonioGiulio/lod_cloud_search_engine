@@ -54,6 +54,7 @@ class LC_Querier {
         var i = 0, j;
         var field;
         const pattern = new RegExp(target, 'i');
+        console.log(pattern);
         for(let d in this.datasets){
             field = '';
             for(j in tags){
