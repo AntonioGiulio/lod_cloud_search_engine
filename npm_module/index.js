@@ -68,6 +68,21 @@ class LC_Querier {
         return this.generalSorting(results, arguments[arguments.length-1]);
     }
 
+
+    filterResults(result, ...tags){
+        var filteredResults = JSON.parse('[]');
+        var j, z = 0;
+        for(let d in result){
+            var singleInstance = JSON.parse('{}');
+            for(j in tags){
+                singleInstance[tags[j]] = result[d][tags[j]];
+            }
+            filteredResults[z++] = singleInstance;
+        }
+
+        return filteredResults
+    }
+
     generalSorting(result, mode){
         switch(mode){
             case 'size':

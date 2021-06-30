@@ -28,14 +28,18 @@ http.createServer(function (request, response){
                 console.log('brutal Search for keyword: ', keyword);
                 body = querier.brutalSearch(keyword, rankingMode);
             }
+            if(myURL.searchParams.has('returnOnly')){
+                var outputTags = myURL.searchParams.get('returnOnly').split(',');
+                console.log('Output Tags: ', outputTags);
+                body = querier.filterResults(body, ...outputTags);
+            }
 
             response.write(JSON.stringify(body));
 
 
         }else{
             console.log('hanno sbagliato, gli spariamo na pagina di documentazione');
-            body = fs.readFileSync('./example.html',
-            {encoding:'utf8', flag:'r'});
+            body = fs.readFileSync('./example.html', {encoding:'utf8', flag:'r'});
             response.writeHead(200, {'Content-Type': 'text/html'});
             response.write(body);
         }        
