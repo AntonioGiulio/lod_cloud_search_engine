@@ -14,19 +14,25 @@ http.createServer(function (request, response){
         //formattiamo la query presente nell'url
         const myURL = new URL(request.url, 'https://localhost:8080');
         var rankingMode = myURL.searchParams.get('rankBy');
+        var resultJson = JSON.parse('{}');
         var body; //quì ci dobbiamo mettere tutto il json
+
+        resultJson['credits'] = 'Antonio Giulio, Maria Angela Pellegrino';
         
         if(myURL.searchParams.has('keyword')){
             var keyword = myURL.searchParams.get('keyword');
+            resultJson['keyword'] = keyword;
 
             if(myURL.searchParams.has('tag')){
                 var tags = myURL.searchParams.get('tag').split(',');
                 console.log('Tag Search for keyword: ' + keyword + ' on tags: ' + tags);
                 body = querier.multiTagSearch(keyword, ...tags, rankingMode);
+                resultJson['tags'] = tags;
 
             }else{
                 console.log('brutal Search for keyword: ', keyword);
                 body = querier.brutalSearch(keyword, rankingMode);
+                resultJson['tags'] = 'all';
             }
             if(myURL.searchParams.has('returnOnly')){
                 var outputTags = myURL.searchParams.get('returnOnly').split(',');
@@ -34,7 +40,15 @@ http.createServer(function (request, response){
                 body = querier.filterResults(body, ...outputTags);
             }
 
-            response.write(JSON.stringify(body));
+            if(rankingMode === null){
+                resultJson['ranking'] = 'name';
+            }else{
+                resultJson['ranking'] = rankingMode;
+            }
+            resultJson['numOfResults'] = Object.keys(body).length;
+            resultJson['results'] = body;
+
+            response.write(JSON.stringify(resultJson));
 
 
         }else{
