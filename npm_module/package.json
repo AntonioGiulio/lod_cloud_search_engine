@@ -2,6 +2,7 @@
     "main": "index.js",
     "name": "lodcloud-querier",
     "version": "0.1.0",
+    "homepage": "https://github.com/AntonioGiulio/lod_cloud_search_engine",
     "dependencies": {
         "xmlhttprequest": "^1.8.0",
         "ngraph.centrality": "^2.0.1",
