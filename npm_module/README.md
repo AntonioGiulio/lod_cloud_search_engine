@@ -19,7 +19,7 @@ You can also choose to **rank** the results in 4 different ways:
 
 ```javascript
 // First of all you have to require the package in the code
-var lc_querier = require('./index');
+var lc_querier = require('./lodcloud-querier');
 
 // ..then you have to initialize the lc_querier
 var querier = new lc_querier();
