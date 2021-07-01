@@ -1,4 +1,4 @@
-var lc_querier = require('./index');
+var lc_querier = require('./npm_module/index');
 
 const fs = require('fs');
 const http = require('http');
