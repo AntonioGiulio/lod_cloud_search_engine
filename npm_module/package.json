@@ -1,7 +1,7 @@
 {
     "main": "index.js",
     "name": "lodcloud-querier",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "homepage": "https://github.com/AntonioGiulio/lod_cloud_search_engine",
     "dependencies": {
         "xmlhttprequest": "^1.8.0",
