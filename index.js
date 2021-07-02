@@ -3,7 +3,7 @@ var lc_querier = require('lodcloud-querier');
 const fs = require('fs');
 const http = require('http');
 
-const PORT = process.env.PORT || 5000
+const PORT = process.env.PORT || 8080;
 
 //inizializziamo il tool per le query a lod-cloud
 const querier = new lc_querier();
