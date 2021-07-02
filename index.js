@@ -5,19 +5,19 @@ const http = require('http');
 
 const PORT = process.env.PORT || 8080;
 
-//inizializziamo il tool per le query a lod-cloud
+//initialize tool for query lod-cloud
 const querier = new lc_querier();
 
-//facciamo partire il server che risponderà alle richieste
+//starts the server
 http.createServer(function (request, response){
     if(request.method === 'GET'){
         response.writeHead(200, {'Content-Type': 'application/json'});
 
-        //formattiamo la query presente nell'url
+        //url formatting
         const myURL = new URL(request.url, 'https://127.0.0.1:'+PORT);
         var rankingMode = myURL.searchParams.get('rankBy');
         var resultJson = JSON.parse('{}');
-        var body; //quì ci dobbiamo mettere tutto il json
+        var body; 
 
         resultJson['credits'] = 'Antonio Giulio, Maria Angela Pellegrino';
         
@@ -54,17 +54,17 @@ http.createServer(function (request, response){
 
 
         }else{
-            console.log('hanno sbagliato, gli spariamo na pagina di documentazione');
-            body = fs.readFileSync('./example.html', {encoding:'utf8', flag:'r'});
+            console.log('show homepage');
+            body = fs.readFileSync('./homepage.html', {encoding:'utf8', flag:'r'});
             response.writeHead(200, {'Content-Type': 'text/html'});
             response.write(body);
         }        
 
         response.end(); 
     }else{
-        console.log('non è un metodo Get');
+        console.log('not GET request');
         response.writeHead(200, {'Content-Type': 'text/html'});
-        response.write('si servono solo richieste GET');
+        response.write('only GET request accepted!!');
         respponse.end();
     }
 
