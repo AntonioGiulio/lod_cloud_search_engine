@@ -1,5 +1,24 @@
 {
+  "name": "lod-cloud-api",
+  "version": "0.1.0",
+  "description": "A sample api that query lod-cloud",
+  "engines": {
+    "node": "14.x"
+  },
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
   "dependencies": {
-    "lodcloud-querier": "^0.1.0"
-  }
+    "lodcloud-querier": "^0.1.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AntonioGiulio/lod_cloud_search_engine"
+  },
+  "keywords": [
+    "knowledge graph",
+    "lod-cloud",
+    "query"
+  ]
 }

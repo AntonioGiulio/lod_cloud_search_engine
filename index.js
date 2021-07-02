@@ -3,6 +3,8 @@ var lc_querier = require('lodcloud-querier');
 const fs = require('fs');
 const http = require('http');
 
+const PORT = process.env.PORT || 5000
+
 //inizializziamo il tool per le query a lod-cloud
 const querier = new lc_querier();
 
@@ -12,7 +14,7 @@ http.createServer(function (request, response){
         response.writeHead(200, {'Content-Type': 'application/json'});
 
         //formattiamo la query presente nell'url
-        const myURL = new URL(request.url, 'https://localhost:8080');
+        const myURL = new URL(request.url, 'https://127.0.0.1:'+PORT);
         var rankingMode = myURL.searchParams.get('rankBy');
         var resultJson = JSON.parse('{}');
         var body; //quì ci dobbiamo mettere tutto il json
@@ -66,4 +68,4 @@ http.createServer(function (request, response){
         respponse.end();
     }
 
-}).listen(8080);
+}).listen(PORT);
