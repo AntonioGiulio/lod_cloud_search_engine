@@ -3,19 +3,19 @@ var lc_querier = require('lodcloud-querier');
 const fs = require('fs');
 const http = require('http');
 
-//inizializziamo il tool per le query a lod-cloud
+
 const querier = new lc_querier();
 
-//facciamo partire il server che risponderà alle richieste
+
 http.createServer(function (request, response){
     if(request.method === 'GET'){
         response.writeHead(200, {'Content-Type': 'application/json'});
 
-        //formattiamo la query presente nell'url
+        
         const myURL = new URL(request.url, 'https://localhost:8080');
         var rankingMode = myURL.searchParams.get('rankBy');
         var resultJson = JSON.parse('{}');
-        var body; //quì ci dobbiamo mettere tutto il json
+        var body; 
 
         resultJson['credits'] = 'Antonio Giulio, Maria Angela Pellegrino';
         

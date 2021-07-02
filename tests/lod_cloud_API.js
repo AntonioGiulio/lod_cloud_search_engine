@@ -6,19 +6,18 @@ const centrality = require('ngraph.centrality');
 
 
 
-// io così la richeista http la faccio una volta sola, non tutte le sante volte
 axios.get('https://lod-cloud.net/lod-data.json')
     .then( res => {
         console.log('Status code response from lod-cloud: ', res.status);
-        const datasets = res.data; //già parsato in JSON
+        const datasets = res.data; 
 
-        //Adesso facciamo partire il server per rispondere alle richieste
+        
         console.log("READY");
         http.createServer(function (request, response) {
             if(request.method === 'GET'){
                 response.writeHead(200, {'Content-Type': 'application/json'});
 
-                //formattiamo la query presente nell'url
+                
                 const myURL = new URL(request.url, 'https://localhost:8080');
                 var body;
                 var keyword = myURL.searchParams.get('keyword');
@@ -98,7 +97,7 @@ axios.get('https://lod-cloud.net/lod-data.json')
     function multiTagSearch(_datasets, target, ...tags){
         var results = JSON.parse('[]');
         var i = 0;
-        //console.log('numero di tag: ' , tags.length);
+        
         var field, matcher;
         const pattern = new RegExp(target, 'i');
         for(let d in _datasets){
@@ -123,12 +122,9 @@ axios.get('https://lod-cloud.net/lod-data.json')
 
             case 'authority':
                 console.log('Ordina con pageRank');
-                //creiamo un grafo vuoto
+               
                 var graph = createGraph(_results);
-                /*
-                resultsGraph.forEachNode(function(node){
-                    console.log(node);
-                });*/
+               
                 var rank = pagerank(graph);
                 console.log(rank);
                 
@@ -137,7 +133,7 @@ axios.get('https://lod-cloud.net/lod-data.json')
 
             case 'centrality':
                 console.log('Ordina con Centrality');
-                //creiamo un grafo vuoto
+                
                 var graph = createGraph(_results);
 
                 var rank = centrality.degree(graph);
@@ -161,13 +157,13 @@ axios.get('https://lod-cloud.net/lod-data.json')
     }
 
     function createGraph(_results){
-        //creiamo un grafo vuoto
+        
         var resultsGraph = graphBuilder();
-        //riempiamolo con i nodi che rappresentano gli identifier dei datasets risultanti dalla ricerca su lodcloud
+        
         for(d in _results){
             resultsGraph.addNode(_results[d].identifier);
         }
-        //cerchiamo i link diretti tra i nodi creati
+        
         for(d in _results){
             var currKGLinks = _results[d].links;
             for(link in currKGLinks){
