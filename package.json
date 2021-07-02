@@ -1,8 +1,5 @@
 {
   "dependencies": {
-    "axios": "^0.21.1",
-    "ngraph.centrality": "^2.0.1",
-    "ngraph.graph": "^19.1.0",
-    "ngraph.pagerank": "^2.0.0"
+    "lodcloud-querier": "^0.1.0"
   }
 }
