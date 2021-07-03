@@ -62,6 +62,21 @@ This parameter is used to format the results, you can choose which tags to colle
 
 Ex: `domain/?keyword=health&returnOnly=title,description,triples,sparql`
 
+##Results
+
+Results are returned in the JSON format according to the following structure:
+
+```json
+{"keyword": <user -select  keyword >,
+ "tags": <list of tags  used  during  the  lookup  process >,
+ "ranking": <performed  ranking  algorithm >,
+ "numOfResults": <number  of results >,
+ "results": <ranked  list of  results  containing  tagsspecified  by the  returnOnly  parameter >
+ }
+
+
+```
+
 ## Examples
 This  API  can  be  used  to  look  for  KGs of interest and perform analysis on KGs exposed by LOD Cloud. You can build different type of queries, for example:
 

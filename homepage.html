@@ -1,10 +1,10 @@
-<h1 id="lod-cloud-api">LOD Cloud API</h1>
+<h1 id="lod-cloud-search-engine">LOD Cloud Search Engine</h1>
 <p><strong>Credits</strong>: Antonio Giulio, Maria Angela Pellegrino</p>
 <h2 id="introduction">Introduction</h2>
 <p>Data management platforms, e.g., <a href="https://lod-cloud.net">LOD Cloud</a> and <a href="https://datahub.io">DataHub</a>, simplify lookup for Knowledge Graph of interest, but their access mechanism is not designed to access all these platforms by a standard and unified approach. We propose an APIs to query LOD Cloud content as a first step in the direction of defining a standard strategy to retrieve keyword-based Knowledge Graph by remote applications.</p>
 <p>The list of KGs contributing LOD Cloud are freely available in a JSON format, accessible from the LOD Cloud webpage <a href="https://lod-cloud.net/lod-data.json">here</a>. The JSON file contains metadata foreach available KG by detailing, among others, <strong>title</strong> and <strong>description</strong>, unique <strong>_id</strong>, <strong>keywords</strong> and <strong>domain</strong>, <strong>download links</strong> and access points, such as the <strong>SPARQL endpoint</strong>, <strong>triple number</strong>  representing  the  KG  size,  and  <strong>outgoing links</strong> to explicit  resources  belonging  to  external  KGs  that  are  referred  by  the  current KG.</p>
 <p>The proposed APIs is a <em><strong>keyword-based lookup REST API</strong></em> that accesses the LODCloud  JSONcontent  and  retrieves  KGs  whose  metadata  contains  the  user-defined  keyword  expressed  as  a  regular  expression. 
-In addition to this Users  can  customise  fields considered during the lookup process and the fields that must be returned, results can also be ranked in different ways.</p>
+In addition to this Users  can  customise  fields considered during the lookup process and the fields that must be returned, results can also be ranked in different ways</p>
 <h2 id="usage">Usage</h2>
 <p>There are four main option parameters:</p>
 <h3 id="keyword">keyword</h3>
@@ -31,6 +31,16 @@ results</li>
 <h3 id="returnonly">returnOnly</h3>
 <p>This parameter is used to format the results, you can choose which tags to collect for each resulting KG (always selected from the aforementioned tag list).</p>
 <p>Ex: <code>https://lod-cloud-api.herokuapp.com/?keyword=health&amp;returnOnly=title,description,triples,sparql</code></p>
+<p>##Results</p>
+<p>Results are returned in the JSON format according to the following structure:</p>
+<pre><code class="lang-json">{
+<span class="hljs-string">"keyword"</span>: &lt;user -select  keyword &gt;,
+ <span class="hljs-string">"tags"</span>: &lt;<span class="hljs-built_in">list</span> <span class="hljs-keyword">of</span> tags  used  during  <span class="hljs-keyword">the</span>  lookup  process &gt;,
+ <span class="hljs-string">"ranking"</span>: &lt;performed  ranking  algorithm &gt;,
+ <span class="hljs-string">"numOfResults"</span>: &lt;<span class="hljs-built_in">number</span>  <span class="hljs-keyword">of</span> results &gt;,
+ <span class="hljs-string">"results"</span>: &lt;ranked  <span class="hljs-built_in">list</span> <span class="hljs-keyword">of</span>  results  containing  tagsspecified  <span class="hljs-keyword">by</span> <span class="hljs-keyword">the</span>  returnOnly  parameter &gt;
+ }
+</code></pre>
 <h2 id="examples">Examples</h2>
 <p>This  API  can  be  used  to  look  for  KGs of interest and perform analysis on KGs exposed by LOD Cloud. You can build different type of queries, for example:</p>
 <ul>
