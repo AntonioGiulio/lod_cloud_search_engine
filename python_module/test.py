@@ -51,22 +51,27 @@ def tagSearch(target, tag, rankingMode='name'):
         return generalSorting(results, rankingMode)
 
     except:
-        logging.info('MALFORMATTED')
+        logging.info('TAG NAME MALFORMED')
         return None
 
 
 def multiTagSearch(target, rankingMode='name', *tags):
     results = []
-    for data in datasets:
-        field = ''
-        for tag in tags:
-            field += json.dumps(datasets[data][tag])
-        if re.search(target, field, re.I):
-            results.append(datasets[data])
+    try:
+        for data in datasets:
+            field = ''
+            for tag in tags:
+                field += json.dumps(datasets[data][tag])
+            if re.search(target, field, re.I):
+                results.append(datasets[data])
 
-    logging.info('MULTI TAG SEARCH on KEYWORD: ' + target + ' on TAGs: ' + json.dumps(tags))
+        logging.info('MULTI TAG SEARCH on KEYWORD: ' + target + ' on TAGs: ' + json.dumps(tags))
     
-    return generalSorting(results, rankingMode)
+        return generalSorting(results, rankingMode)
+
+    except:
+        logging.info('TAG NAMES MALFORMED')
+        return None
 
 def generalSorting(results, mode):
     if(mode == 'size'):
@@ -140,4 +145,4 @@ initialize()
 #print(json.dumps(sortResultsBySize(brutalSearch("museum"))))
 #print(json.dumps(sorResultsByAuthority(brutalSearch('museum'))))
 #print(json.dumps(sortResultsByCentrality(brutalSearch('museum'))))
-tagSearch('museum', 'id')
+multiTagSearch('museum', 'authority', '_id', 'identifier', 'description')
