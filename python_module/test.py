@@ -73,6 +73,25 @@ def multiTagSearch(target, rankingMode='name', *tags):
         logging.info('TAG NAMES MALFORMED')
         return None
 
+
+def filterResults(results, *tags):
+    try:
+        filteredResults = []
+
+        for data in results:
+            singleInstance = {}
+            for tag in tags:
+                singleInstance[tag] = data[tag]
+            filteredResults.append(singleInstance)
+
+        logging.info('TAG FILTERED: ' + json.dumps(tags))
+
+        return filteredResults
+    except:
+        logging.info('NO RESULTS RECEIVED by FILTER or OUT TAGS MALFORMED')
+        return None
+
+
 def generalSorting(results, mode):
     if(mode == 'size'):
         return sortResultsBySize(results)
@@ -123,12 +142,8 @@ def sortResultsByCentrality(results):
 def createGraph(raw):
     graph=nx.Graph() #creiamo un grafo vuoto
     for data in raw:
-        graph.add_node(data['identifier'])  #aggiungiamo i nodi al grafo
-    #print("Nodes of graph: ")
-    # print(graph.nodes())
+        graph.add_node(data['identifier']) 
 
-    #ora dobbiamo aggiungere gli archi
-    #cerchiamo i link diretti tra i nodi creati
     for data in raw:
         currKGLinks = data['links']
         for link in currKGLinks:
@@ -145,4 +160,4 @@ initialize()
 #print(json.dumps(sortResultsBySize(brutalSearch("museum"))))
 #print(json.dumps(sorResultsByAuthority(brutalSearch('museum'))))
 #print(json.dumps(sortResultsByCentrality(brutalSearch('museum'))))
-multiTagSearch('museum', 'authority', '_id', 'identifier', 'description')
+print(json.dumps(filterResults(multiTagSearch('museum', 'authority', '_id', 'identifier', 'description'), 'identfier', 'title')))
