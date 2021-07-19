@@ -1,13 +1,38 @@
+"""
+--------------------------------------------------------------------
+Title: lodcloud_search_api
+Author: Antonio Giulio
+URL: https://github.com/AntonioGiulio/lod_cloud_search_engine
+Description: This module is capable of performing various types of queries on the JSON file offered by lod cloud.
+            It turns out to be useful for those looking for a Knowledge Graph to use 
+            or for those who want to create analytics on lodcloud.
+Created: July 19 2021
+Version: 0.0.1
+--------------------------------------------------------------------
+"""
+#package required for http request/response
+import requests
+
+#package required to work with JSON files/objects
+import json
+
+#package required to work with Regular Expressions
+import re
+
+#pip package useful to build graphs and calculate pagerank and centrality
+import networkx as nx
 from networkx.algorithms import centrality
 from networkx.algorithms.operators.unary import reverse
-import requests
-import json
-import re
-import networkx as nx
+
+#package required for log informations
 import logging
 logging.basicConfig(level=logging.INFO)
 
-
+"""
+Summary: This function loads raw data form lod-cloud and saves it in the 
+         global variable "datasets". 
+         You must invoke this function in order to use the others.
+"""
 def initialize():
     global datasets
     r =requests.get('https://lod-cloud.net/lod-data.json')
@@ -19,7 +44,12 @@ def initialize():
         logging.info('Request failed: ' + r.status_code)
         datasets = None
 
-
+"""
+Summary:    For each Knowledge Graph, it searches within all tags
+            for the regular expression containing the target.
+Parameters: target (string) keyword to search, rankingMode (string) enables one of the ranking modes.
+Return:     JSONArray containing the ordered results
+"""
 def brutalSearch(target, rankingMode='name'):
     results = []
     for data in  datasets:
@@ -35,6 +65,13 @@ def brutalSearch(target, rankingMode='name'):
     return generalSorting(results, rankingMode)
 
 
+"""
+Summary:    For each knowledge graph, it searches within the specified tag
+            for the regular expression containing the target.
+Parameters: target (string) keyword to search, tag (string) tag to inspect, 
+            rankingMode (string) enable one of ranking modes.
+Return:     JSONArray containing the ordered results.
+"""
 def tagSearch(target, tag, rankingMode='name'):
     results = []
     try:
@@ -53,6 +90,13 @@ def tagSearch(target, tag, rankingMode='name'):
         return None
 
 
+"""
+Summary:    For each knowledge graph, it searches within the specified tags
+            for the regular expression containing the target.
+Parameters: target (string) keyword to search, rankingMode (string) enable one of ranking methods,
+            tags (string[]) tags to inspect.
+Return:     JSONArray containing the ordered results.
+"""
 def multiTagSearch(target, rankingMode='name', *tags):
     results = []
     try:
@@ -72,6 +116,11 @@ def multiTagSearch(target, rankingMode='name', *tags):
         return None
 
 
+"""
+Summary:    It's a filter to return in the resulting JSON only tags specified.
+Parameters: results (JSONArray) generated in a previous request, tags (string[]) tag to filter in.
+Return:     JSONArray containing the filtered results.
+"""
 def filterResults(results, *tags):
     try:
         filteredResults = []
@@ -90,6 +139,11 @@ def filterResults(results, *tags):
         return None
 
 
+"""
+Summary:    It's a dispatcher method to execute the ranking algorithm specified in the mode parameter.
+Parameters: results (JSONArray) generated in a previous request, mode (string) ranking mode.
+Return: JSONArray containing the ordered results.
+"""
 def generalSorting(results, mode):
     if(mode == 'size'):
         return sortResultsBySize(results)
@@ -100,18 +154,31 @@ def generalSorting(results, mode):
     else:
         return sortResultsByName(results)
 
+"""
+Summary:    Sorts results in alphabetic order using the identifier.
+Parameters: results (JSONArray) generated in a previous request.
+Return:     JSONArray containing the ordered results.
+"""
 def sortResultsByName(results):
     results.sort(key= lambda x:x["identifier"])
     logging.info("RankedBy= NAME(default)")
     return results
 
-
+"""
+Summary:    Sorts results by triples number.
+Parameters: results (JSONArray) generated in a previous request.
+Return:     JSONArray containing the ordered results.
+"""
 def sortResultsBySize(results):
     results.sort(key= lambda x:int(x["triples"]), reverse=True)
     logging.info("RankedBy= SIZE")
     return results
 
-
+"""
+Summary:    Sorts results by authority using the pagerank algorithm
+Parameters: results (JSONArray) generated in a previous request.
+Return:     JSONArray containing the ordered results.
+"""
 def sorResultsByAuthority(results):
     graph = createGraph(results)
     pr = nx.pagerank(graph)
@@ -124,6 +191,12 @@ def sorResultsByAuthority(results):
 
     return results
 
+
+"""
+Summary:    Sorts results by centrality using the centrality algorithm
+Parameters: results (JSONArray) generated in a previous request.
+Return:     JSONArray containing the ordered results.
+"""
 def sortResultsByCentrality(results):
     graph = createGraph(results)
     centr = nx.degree_centrality(graph)
@@ -137,6 +210,11 @@ def sortResultsByCentrality(results):
     return results
 
 
+"""
+Summary:    this function creates a graph from results.
+Parameters: raw (JSONArray) generated in a previous request.
+Return:     graph.
+"""
 def createGraph(raw):
     graph=nx.Graph() 
     for data in raw:
