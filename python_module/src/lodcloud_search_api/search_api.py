@@ -1,5 +1,3 @@
-#Cerchiamo di riprodurre il meccanismo di query on lod-cloud con python 
-
 from networkx.algorithms import centrality
 from networkx.algorithms.operators.unary import reverse
 import requests
@@ -140,7 +138,7 @@ def sortResultsByCentrality(results):
 
 
 def createGraph(raw):
-    graph=nx.Graph() #creiamo un grafo vuoto
+    graph=nx.Graph() 
     for data in raw:
         graph.add_node(data['identifier']) 
 
@@ -153,11 +151,12 @@ def createGraph(raw):
     return graph
 
 
-initialize()
+
+#initialize()
 #print(json.dumps(brutalSearch("museum")))
 #print(json.dumps(tagSearch('museum', 'example')))
 #print(json.dumps(sortResultsByName(brutalSearch("museum"))))
 #print(json.dumps(sortResultsBySize(brutalSearch("museum"))))
 #print(json.dumps(sorResultsByAuthority(brutalSearch('museum'))))
 #print(json.dumps(sortResultsByCentrality(brutalSearch('museum'))))
-print(json.dumps(filterResults(multiTagSearch('museum', 'authority', '_id', 'identifier', 'description'), 'identfier', 'title')))
+#print(json.dumps(filterResults(multiTagSearch('covid?19', 'authority', '_id', 'identifier', 'description'), 'identifier', 'title')))
