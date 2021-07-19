@@ -16,7 +16,7 @@ def initialize():
         logging.info('200 OK --> INITIALIZED')
         datasets = json.loads(r.text)
     else:
-        print('Request failed: ' + r.status_code)
+        logging.info('Request failed: ' + r.status_code)
         datasets = None
 
 
