@@ -1,3 +1,20 @@
+Metadata-Version: 2.1
+Name: lodcloud-search-API
+Version: 0.0.1
+Summary: It makes available a set of functions created to make it easier and more effective to search for knowledge graphs among those made available by https://lod-cloud.net.
+Home-page: https://github.com/AntonioGiulio/lod_cloud_search_engine
+Author: Antonio Giulio
+Author-email: antonio.giulio96@gmail.com
+License: UNKNOWN
+Project-URL: Bug Tracker, https://github.com/AntonioGiulio/lod_cloud_search_engine/issues
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
+License-File: LICENCE
+
 # lodcloud\_search\_API
 
 ## Description 
@@ -58,3 +75,4 @@ results = search_api.multiTagSearch('keyword', rankingMode, 'tag_1', 'tag_2', 't
 * **sortResultsByName(results)**: Sorts results in alphabetic order using the identifier.
 * **sortResultsByAuthority(results)**: Sorts results by authority using the pagerank algorithm.
 * **sortResultsByCentrality(results)**: Sorts results by centrality using the centrality algorithm.
+

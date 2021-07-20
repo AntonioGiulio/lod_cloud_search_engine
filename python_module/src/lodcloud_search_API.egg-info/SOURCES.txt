@@ -1,0 +1,10 @@
+LICENCE
+README.md
+pyproject.toml
+setup.cfg
+src/lodcloud_search_API.egg-info/PKG-INFO
+src/lodcloud_search_API.egg-info/SOURCES.txt
+src/lodcloud_search_API.egg-info/dependency_links.txt
+src/lodcloud_search_API.egg-info/top_level.txt
+src/lodcloud_search_api/__init__.py
+src/lodcloud_search_api/search_api.py
