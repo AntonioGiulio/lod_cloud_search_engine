@@ -5,7 +5,7 @@
 ## Introduction
 Data management platforms, e.g., [LOD Cloud](https://lod-cloud.net) and [DataHub](https://datahub.io), simplify lookup for Knowledge Graph of interest, but their access mechanism is not designed to access all these platforms by a standard and unified approach. We propose an APIs to query LOD Cloud content as a first step in the direction of defining a standard strategy to retrieve keyword-based Knowledge Graph by remote applications.
 
-The list of KGs contributing LOD Cloud are freely available in a JSON format, accessible from the LOD Cloud webpage [here](https://lod-cloud.net/lod-data.json). The JSON file contains metadata foreach available KG by detailing, among others, **title** and **description**, unique **_id**, **keywords** and **domain**, **download links** and access points, such as the **SPARQL endpoint**, **triple number**  representing  the  KG  size,  and  **outgoing links** to explicit  resources  belonging  to  external  KGs  that  are  referred  by  the  current KG.
+The list of KGs contributing LOD Cloud are freely available in a JSON format, accessible from the LOD Cloud webpage [here](https://lod-cloud.net/lod-data.json). The JSON file contains metadata for each available KG by detailing, among others, **title** and **description**, unique **_id**, **keywords** and **domain**, **download links** and access points, such as the **SPARQL endpoint**, **triple number**  representing  the  KG  size,  and  **outgoing links** to explicit  resources  belonging  to  external  KGs  that  are  referred  by  the  current KG.
 
 The proposed APIs is a _**keyword-based lookup REST API**_ that accesses the LODCloud  JSONcontent  and  retrieves  KGs  whose  metadata  contains  the  user-defined  keyword  expressed  as  a  regular  expression. 
 In addition to this Users  can  customise  fields considered during the lookup process and the fields that must be returned, results can also be ranked in different ways
@@ -16,6 +16,9 @@ First of all, clone this repository, then move in the your local repo and instal
 `npm i lodcloud-querier`
 
 It is a module specially developed to create this API, it is able to make queries towards LOD-Cloud. You can find it on the [official npm page](https://www.npmjs.com/package/lodcloud-querier), and the code is available in the _npm\_module_ folder.
+
+(If you are a *Python* user there is also a **pip package** which offers the same functionalities as the npm module. You can find the pip package at [this](https://pypi.org/project/lodcloud-search-API/) address and install it as below:
+`pip install lodcloud-search-API` )
 
 Then you can start the API:
 
