@@ -24,12 +24,11 @@ class LC_Querier {
     
     constructor() {
         
-        var request = new http_tool();
-        request.open('GET', "https://lod-cloud.net/lod-data.json", false);      //GET request to lod-cloud endpoint
-        request.send();
-        if(request.status === 200){
-            console.log('Status code response from lod-cloud: ', request.status);
-            this.datasets = JSON.parse(request.responseText);       //parsing in JSON of response file
+        try {
+            this.datasets = require("./lodcloud.json");
+        }catch (error){
+            console.log('lodcloud.json is missing. Try to Download...');
+            this.updateDatasets();
         }
     } 
 
@@ -212,6 +211,24 @@ class LC_Querier {
 
         return results;
     }
+
+    // we can use this function to update the KGs database
+    updateDatasets(){
+        var request = new http_tool();
+        request.open('GET', "https://lod-cloud.net/lod-data.json", false);      //GET request to lod-cloud endpoint
+        request.send();
+        if(request.status === 200){
+            console.log('Status code response from lod-cloud: ', request.status);
+            this.datasets = JSON.parse(request.responseText);       //parsing in JSON of response file
+        }else{
+            console.log('lod cloud è down');
+        }
+        fs.writeFile('lodcloud.json', JSON.stringify(this.datasets), function(err) {
+            if (err) return console.log(err);
+            console.log('File updated');
+            datasets = require("./lodcloud.json");
+        });
+    }
 }
 
 /*
@@ -240,4 +257,3 @@ function createGraph(raw){
 }
 
 module.exports = LC_Querier;
-

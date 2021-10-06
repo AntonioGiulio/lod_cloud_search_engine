@@ -1,12 +1,12 @@
 {
     "main": "index.js",
     "name": "lodcloud-querier",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "homepage": "https://github.com/AntonioGiulio/lod_cloud_search_engine",
     "dependencies": {
-        "xmlhttprequest": "^1.8.0",
         "ngraph.centrality": "^2.0.1",
         "ngraph.graph": "^19.1.0",
-        "ngraph.pagerank": "^2.0.0"
+        "ngraph.pagerank": "^2.0.0",
+        "xmlhttprequest": "^1.8.0"
     }
 }
