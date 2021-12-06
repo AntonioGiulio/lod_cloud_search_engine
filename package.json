@@ -1,6 +1,6 @@
 {
   "name": "lod-cloud-api",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A sample api that query lod-cloud",
   "engines": {
     "node": "14.x"
@@ -10,7 +10,7 @@
     "start": "node index.js"
   },
   "dependencies": {
-    "lodcloud-querier": "^0.1.1"
+    "lodcloud-querier": "^0.1.2"
   },
   "repository": {
     "type": "git",

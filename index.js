@@ -50,7 +50,7 @@ http.createServer(function (request, response){
             resultJson['numOfResults'] = Object.keys(body).length;
             resultJson['results'] = body;
 
-            response.write(JSON.stringify(resultJson));
+            response.write(JSON.stringify(resultJson, null, 2));
 
 
         }else{
